@@ -1,4 +1,6 @@
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     private int money;
     private String name;
     public static final int DEFAULT_MONEY = 100;
