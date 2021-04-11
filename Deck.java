@@ -103,6 +103,10 @@ public class Deck {
         return c;
     }
 
+    public Card peek() {
+        return cards.peek();
+    }
+
     //shuffles the deck of cards
     //n will be 1 for a regular 'real' deck, otherwise n is the number of 'real' decks within a Deck
     public void shuffle(int n) {

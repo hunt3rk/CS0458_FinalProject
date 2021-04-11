@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class InitializeLeaderboard {
-    public static void main(String[] args) {
+    public static void main(String[] args) { //TODO: initialize the leaderboard to have 0 players, currently it gives 2 for testing purposes.
         AList<Player> records = new AList<>();
 
         Player p = new Player();

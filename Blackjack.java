@@ -8,8 +8,9 @@ import java.io.FileOutputStream;
 import java.util.Scanner;
 
 public class Blackjack {
+
+    static Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
         Player player = new Player();
         String name;
         boolean repeat = true;
@@ -27,7 +28,7 @@ public class Blackjack {
                 System.err.println("File read error!");
                 System.exit(1);
             } catch (ClassNotFoundException ex) {
-                System.err.println("File does not contain valid score information.");
+                System.err.println("File does not contain valid information.");
             }
         }
 
@@ -63,17 +64,7 @@ public class Blackjack {
             repeat = false;
         }
 
-
-
-
-
-        
-        //GAME MECHANICS
-
-
-
-
-        
+        playGame(player);
 
         //Update the leaderboard file with the new record.
         records.add(player);
@@ -103,9 +94,9 @@ public class Blackjack {
                 fin.close();
             } catch (IOException ex) {
                 System.err.println("File read error!");
-                System.exit(1);
+                System.exit(2);
             } catch (ClassNotFoundException ex) {
-                System.err.println("File does not contain valid loan information.");
+                System.err.println("File does not contain valid information.");
             }
         }
         System.out.println("------------------------------------------------------------------------------------");
@@ -113,5 +104,71 @@ public class Blackjack {
             System.out.println(p.getName() + ": $" + p.getMoney());
         }
         System.out.println("------------------------------------------------------------------------------------");
+    }
+
+    public static void playGame(Player p) {
+        boolean playing = true;
+        boolean yourTurn = true;
+        int bet;
+
+        Deck deck = new Deck(6,true); //creates a deck of 6 decks and shuffles it (standard for casino blackjack)
+        int playerTotal;
+        int dealerTotal;
+        ArrayDeque<Card> playerCards;
+        ArrayDeque<Card> dealerCards;
+
+        while (playing) {
+
+            playerTotal = 0;
+            dealerTotal = 0;
+            playerCards = new ArrayDeque<>();
+            dealerCards = new ArrayDeque<>();
+
+            System.out.print("Do you want to PLAY or QUIT and save your score?(P/Q): ");
+            if (in.nextLine().equals("Q")) {
+                playing = false;
+                break;
+            }
+            do {
+                System.out.print("Enter the amount you want to bet: (You currently have $" + p.getMoney() + "): ");
+                bet = in.nextInt();  //no input validation, could break here
+                if (bet > p.getMoney() || bet < 0)
+                    System.out.println("Invalid amount.");
+            } while (bet > p.getMoney() || bet < 0);
+            
+            //draw 2 cards for the dealer and for the player
+            System.out.println("The dealer has drawn a " + deck.peek() + " and one other face-down card.");
+            dealerCards.add(deck.drawCard());
+            dealerCards.add(deck.drawCard());
+            System.out.print("You have drawn a " + deck.peek());
+            playerCards.add(deck.drawCard());
+            System.out.println(" and a " + deck.peek());
+            playerCards.add(deck.drawCard());
+
+            //TODO: get player and dealer totals using Card.getRank(), if either are 21 its blackjack, yourTurn = false so game ends immediately.
+
+            //This loop represents your turn to draw cards.
+            while (yourTurn) {
+                System.out.print("Do you want to HIT, or STAND?(H/S): "); //hit and stand are the 2 primary actions needed, can also add double, split..
+                String choice = in.next().toUpperCase();
+                if (choice.equals("H")) {
+                    //TODO: replicate a hit
+                } else if (choice.equals("S")) {
+                    //TODO: replicate a stand
+                } else {
+                    System.out.println("Invalid input.");
+                }
+                //TODO: update playerTotal after each iteration of this loop.
+                //TODO: automatically end yourTurn if total is > 21.
+            }
+
+            //TODO: loop that will play as the dealer (keep hitting until total is 17 or over 21)
+
+            if (playerTotal < dealerTotal || playerTotal > 21) {
+                p.lose(bet);
+            } else {
+                p.win(bet);
+            }
+        }
     }
 }
