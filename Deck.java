@@ -1,4 +1,10 @@
 public class Deck {
+
+    /**
+     * class that imitates a deck
+     * it holds an ArrayDeque of cards and contains methods to modify that ArrayDeque
+     */
+
     private int cardsRemaining;
     private ArrayDeque<Card> cards;
     public final int DEFAULT_SIZE = 52;

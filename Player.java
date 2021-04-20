@@ -1,5 +1,10 @@
 import java.io.Serializable;
 
+/**
+ * Class that imitates a player
+ * Each player has a name, and a money amount
+ */
+
 public class Player implements Serializable {
     private int money;
     private String name;

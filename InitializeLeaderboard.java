@@ -3,16 +3,13 @@ import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class InitializeLeaderboard {
-    public static void main(String[] args) { //TODO: initialize the leaderboard to have 0 players, currently it gives 2 for testing purposes.
-        AList<Player> records = new AList<>();
+/**
+ * clears the AList of players in leaderboard.dat, effectively refreshing the leaderboard.
+ */
 
-        Player p = new Player();
-        Player p2 = new Player("Hunter");
-        p2.lose(35);
-        
-        records.add(p);
-        records.add(p2);
+public class InitializeLeaderboard {
+    public static void main(String[] args) {
+        AList<Player> records = new AList<>();
 
         File leaderboard = new File("leaderboard.dat");
         try {
